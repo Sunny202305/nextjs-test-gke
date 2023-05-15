@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-test-app
+spec:
+  selector:
+    app: nextjs-test-app
+  ports:
+   - protocol: TCP
+     port: 3000
+  type: LoadBalancer
