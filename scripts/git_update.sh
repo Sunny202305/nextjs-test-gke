@@ -36,7 +36,7 @@ then
   VNUM2=v$((VNUM2+1))
 elif [[ $VERSION == 'patch' ]]
 then
-  VNUM3=v$((VNUM3+1))
+  VNUM3=v$((3))
 else
  echo "No version type or incorrect type specified, try: -v [major, minor, patch]"
  exit 1
