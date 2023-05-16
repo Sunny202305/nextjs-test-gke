@@ -1,15 +1,17 @@
 ---
-name: BUild and Push Nextjs Image to Google Cloud Platform.
+name: Build and Push Nextjs Image to Google Cloud Platform.
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - master
 jobs:
-  build-push-gcr:
-    name: Build and Push Nextjs Image to GCP
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish and Deploy
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: nextjs-test-gke
-      PROJECT_ID: flyntlok-test-project
+      IMAGE_NAME: ${{ secrets.IMAGE }}
+      PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -35,9 +37,10 @@ jobs:
 
     - name: Push Docker Image to Artifact Registry
       env:
-        GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+        GIT_TAG: ${{ env.git-tag }}
       run: |-
         docker tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:latest
         docker tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:$GIT_TAG
         docker push us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:latest
         docker push us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:$GIT_TAG
+

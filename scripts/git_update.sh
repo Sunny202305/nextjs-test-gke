@@ -36,7 +36,7 @@ then
   VNUM2=v$((VNUM2+1))
 elif [[ $VERSION == 'patch' ]]
 then
-  VNUM3=v$((3))
+  VNUM3=v$((VNUM3+1))
 else
  echo "No version type or incorrect type specified, try: -v [major, minor, patch]"
  exit 1
@@ -60,6 +60,7 @@ else
   echo "Already a tag on this commit"
 fi
 
-echo ::set-output name=git-tag::$NEW_TAG
+#echo ::set-output name=git-tag::$NEW_TAG
+echo "git-tag=$NEW_TAG" >> $GITHJUB_STATE
 
 exit 0
