@@ -9,8 +9,8 @@ jobs:
     name: Setup, Build, Publish and Deploy
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ${{ secrets.IMAGE }}
-      PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+      IMAGE_NAME: nextjs-test-gke
+      PROJECT_ID: flyntlok-test-project
 
     steps:
     - name: Checkout
