@@ -21,7 +21,7 @@ fi
 echo "Current version: $CURRENT_VERSION"
 
 #replice . with space so can split into an array
-CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./})
+CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./ })
 
 #get numbner parts
 VNUM1=${CURRENT_VERSION_PARTS[0]}
