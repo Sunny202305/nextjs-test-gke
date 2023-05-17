@@ -28,12 +28,22 @@ jobs:
     - name: Use gcloud CLI
       run: gcloud info
 
-    - name: Set up Kustomize
-      run: |-
-        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-        chmod u+x ./kustomize
+    - id: get-credentials
+      uses: google-github-actions/get-gke-credentials@v1
+      with:
+        cluster_name: ${{ secrets.GKE_CLUSTER }}
+        location:  ${{ secrets.GKE_LOCATION }}
+
+    # The KUBECONFIG env var is automatically exported and picked up by kubectl.
+    # - id: get-pods
+    #   run: kubectl get pods
+
+    # - name: Set up Kustomize
+    #   run: |-
+    #     curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+    #     chmod u+x ./kustomize
     
-    - name: Print kubectl & kustomize versions
+    # - name: Print kubectl & kustomize versions
       run: |-
         kubectl version
         kustomize version
