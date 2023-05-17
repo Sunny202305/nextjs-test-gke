@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: nextjs-test-gke
-          image: Sunny202305/nextjs-test-gke
+          image: nextjs-test-gke
           ports:
            - containerPort: 3000
