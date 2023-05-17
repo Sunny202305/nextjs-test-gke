@@ -34,16 +34,29 @@ jobs:
         cluster_name: ${{ secrets.GKE_CLUSTER }}
         location:  ${{ secrets.GKE_LOCATION }}
 
-    # The KUBECONFIG env var is automatically exported and picked up by kubectl.
-    # - id: get-pods
-    #   run: kubectl get pods
+    - name: Build Docker Image
+      run: docker build -t $IMAGE_NAME:latest .
 
-    # - name: Set up Kustomize
-    #   run: |-
-    #     curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-    #     chmod u+x ./kustomize
-    
-    - name: Print kubectl & kustomize versions
+    - name: Configure Docker Client
       run: |-
-        kubectl version
-        kustomize version
+        gcloud auth configure-docker --quiet
+        gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+
+    - name: Push Docker Image to Artifact Registry
+      run: |-
+        docker tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:latest
+        docker tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:$GITHUB_SHA
+        docker push us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:latest
+        docker push us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:$GITHUB_SHA
+
+    - name: Set up Kustomize
+      run: |-
+        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+        chmod u+x ./kustomize
+
+    - name: Deploy Docker image to the GKE cluster
+      run: |-
+        ./kustomize edit set image us-central1-docker.pkg.dev/PROJECT_ID/IMAGE:TAG=us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE:$GITHUB_SHA
+        ./kustomize build . | kubectl apply -f -
+        kubectl rollout status deployment/$DEPLOYMENT_NAME
+        kubectl get services -o wide
