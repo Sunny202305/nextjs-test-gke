@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nextjs-test-app
+  name: nextjs-test-gke
 spec:
   selector:
     matchLabels:
-      app: nextjs-test-app
-  replicas: 2
+      app: nextjs-test-gke
+  replicas: 3
   template:
     metadata:
       labels:
-        app: nextjs-test-app
+        app: nextjs-test-gke
     spec:
       containers:
-        - name: nextjs-test-app
-          image: sunny202305/nextjs-test-app
+        - name: nextjs-test-gke
+          image: nextjs-test-gke/nextjs-test-gke
           ports:
            - containerPort: 3000
