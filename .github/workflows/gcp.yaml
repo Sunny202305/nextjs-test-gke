@@ -11,7 +11,7 @@ jobs:
     env:
       IMAGE_NAME: nextjs-test-gke
       PROJECT_ID: flyntlok-test-project
-      DEPLOYMENT_NAME: nextjs-test-app
+      DEPLOYMENT_NAME: nextjs-test-gke
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -42,6 +42,13 @@ jobs:
         gcloud auth configure-docker --quiet
         gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
+    # - name: Push Docker Image to Container Registry
+    #   run: |-
+    #     docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+    #     docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA
+    #     docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+    #     docker push ugcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA
+
     - name: Push Docker Image to Artifact Registry
       run: |-
         docker tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:latest
@@ -54,9 +61,22 @@ jobs:
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
 
-    - name: Deploy Docker image to the GKE cluster
+    # - name: Deploy Docker image to the GKE cluster from GCR
+    #   run: |-
+    #     ./kustomize edit set image us-central1-docker.pkg.dev/PROJECT_ID/IMAGE:TAG=us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA
+    #     ./kustomize build . | kubectl apply -f -
+    #     kubectl rollout status deployment/$DEPLOYMENT_NAME
+    #     kubectl get services -o wide
+
+    - name: Deploy Docker image to the GKE cluster from GAR
       run: |-
         ./kustomize edit set image us-central1-docker.pkg.dev/PROJECT_ID/IMAGE:TAG=us-central1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME/$IMAGE_NAME:$GITHUB_SHA
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
+  
+    # - name: Deploy Docker image to the GKE cluster from GAR by kubectl
+    #   run: |-
+    #     kubectl run ${{ env.PROJECT_ID }} \ --image=${{ secrets.GKE_LOCATION }}.pkg.dev/${{ secrets.GKE_PROJECT }}/${{ secrets.IMAGE }}/${{ secrets.IMAGE }}:$GITHUB_SHA
+    #     kubectl rollout status deployment/$DEPLOYMENT_NAME
+    #     kubectl get services -o wide
