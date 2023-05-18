@@ -12,6 +12,7 @@ steps:
     - 'build'
     - '-t'
     - 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:$COMMIT_SHA'
+    - '-t'
     - 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest'
 # push container image
 - name: 'gcr.io/cloud-builders/docker'
