@@ -1,0 +1,12 @@
+# Cloud Build substitutions: use this same build config to push iamges for different env.
+# steps:
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: [ 'build', '-t', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}', '.' ]
+# images:
+# - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}'
+
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke', '.' ]
+images:
+- 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke'

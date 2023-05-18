@@ -2,8 +2,8 @@
 name: Build and Push Nextjs Image to Google Cloud Platform.
 on:
   push:
-    branches: 
-      - master
+    branches:
+      - dev
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish and Deploy
