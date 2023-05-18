@@ -8,8 +8,14 @@
 steps:
 # build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:$COMMIT_SHA', '.' ]
+  args: 
+    - 'build'
+    - '-t'
+    - 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:$COMMIT_SHA'
+    - 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest'
 # push container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'push', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:$COMMIT_SHA' ]
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest' ]
 # deploy image to GKE
