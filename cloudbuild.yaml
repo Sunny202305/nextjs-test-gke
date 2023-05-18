@@ -12,11 +12,11 @@ steps:
 # push container image
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest' ]
-# deploy container image to GKE
+# deploy container image to GKE, file name is the kubernetes source file.
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
   - --filename='nextjs-test-gke'
-  - --image='us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest'
+  - --image='us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke'
   - --location='us-central1'
   - --cluster='nextjs-test-gke'
