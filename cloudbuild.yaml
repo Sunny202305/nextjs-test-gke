@@ -6,19 +6,19 @@
 # - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}'
 
 steps:
-#build ther container image
+# build the container image
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke', '.' ]
-images:
-- 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke'
+  images:
+  - 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke'
 # push container image
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke:latest' ]
 # deploy container image to GKE
-- name: 'gcr.io/cloud-builders/gke-deploy'
-  args:
-  - run
-  - --filename=nextjs-test-gke
-  - --image=us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest
-  - --location=us-central1
-  - --cluster=nextjs-test-gke
+# - name: 'gcr.io/cloud-builders/gke-deploy'
+#   args:
+#   - run
+#   - --filename='nextjs-test-gke'
+#   - --image='us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest'
+#   - --location='us-central1'
+#   - --cluster='nextjs-test-gke'
