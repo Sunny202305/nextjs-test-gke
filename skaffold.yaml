@@ -7,7 +7,7 @@ apiVersion: skaffold/v2beta16
 kind: Config
 profiles:
   # Specify the profile name which you can run later using skaffold run -p <profilename>
-  - name: nextjs-test-gke
+  - name: nextjs-test-kusomize
     # build:
     #   artifacts:
     #     # Skaffold will use this as your image name and push it here after building
