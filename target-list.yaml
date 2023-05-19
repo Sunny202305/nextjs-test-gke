@@ -1,0 +1,16 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: nextjs-test-gke
+description: testing development cluster
+gke:
+  cluster: projects/flyntlok-test-project/locations/us-central1/clusters/nextjs-test-gke
+---
+
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: autopilot-cluster-1
+description: testing production cluster
+gke:
+  cluster: projects/flyntlok-test-project/locations/us-central1/clusters/autopilot-cluster-1
