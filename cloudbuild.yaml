@@ -30,12 +30,14 @@ steps:
 #     - CLOUDSDK_COMPUTE_ZONE=us-central1
 #     - CLOUDSDK_CONTAINER_CLUSTER=nextjs-test-gke
 
-- name: gcr.io/k8s-skaffold/skaffold
-  args:
-    - skaffold
-    - build
-    - '--interactive=false'
-    - '--file-output=/workspace/artifacts.json'
+# to test if skaffold works here
+# - name: gcr.io/k8s-skaffold/skaffold
+#   args:
+#     - skaffold
+#     - build
+#     - '--interactive=false'
+#     - '--file-output=/workspace/artifacts.json'
+
 # Create release in Google Cloud Deploy
 # Artifact Registry path: '--images', 'IMAGE_NAME=REPO_LOCATION/$PROJECT_ID/$REPO_NAME/IMAGE_NAME:${COMMIT_SHA}'
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
