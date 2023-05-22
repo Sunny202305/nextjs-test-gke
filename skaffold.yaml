@@ -1,3 +1,8 @@
+# When a release is created, Google Cloud Deploy calls Skaffold to render your manifests.
+# At deploy time, Google Cloud Deploy calls Skaffold again to apply those manifests to
+#  deploy your application to each target in your progression. After deployment, Skaffold
+#  performs health checks to monitor the target runtime for successful deployment.
+
 apiVersion: skaffold/v4beta2
 kind: Config
 metadata:
