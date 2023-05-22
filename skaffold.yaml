@@ -9,7 +9,7 @@ metadata:
   name: nextjs-test-gke
 build:
   artifacts:
-    - image: us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke
+    - image: us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest
       docker:
         dockerfile: Dockerfile
 manifests:
