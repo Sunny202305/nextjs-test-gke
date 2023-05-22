@@ -7,7 +7,7 @@ apiVersion: skaffold/v2beta16
 kind: Config
 profiles:
   # Specify the profile name which you can run later using skaffold run -p <profilename>
-  - name: nextjs-test-kusomize
+  - name: nextjs-test-kustomize
     # build:
     #   artifacts:
     #     # Skaffold will use this as your image name and push it here after building
@@ -15,7 +15,12 @@ profiles:
     #     - 
     deploy:
       # In case we enable status check, this will be the timeout till which skaffold will wait
-      statusCheckDeadlineSeconds: 600
-      kustomize:
-        paths:
-          - .
+      # statusCheckDeadlineSeconds: 600
+      # kustomize:
+      #   paths:
+      #     - .
+      kubectl:
+        # Location to our yaml files
+        # Refer https://skaffold.dev/docs/references/yaml/ for more options
+        manifests:
+            - k8s/base/*.yaml
