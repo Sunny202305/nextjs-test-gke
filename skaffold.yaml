@@ -1,5 +1,4 @@
-apiVersion: skaffold/v2beta16
-kind: Config
+apiVersion: skaffold/v4beta2
 metadata:
   name: nextjs-test-gke
 build:
