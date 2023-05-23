@@ -57,3 +57,15 @@ steps:
       '--annotations', 'commitId=${REVISION_ID}',
       '--images', 'nextjs-test-gke=us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:${COMMIT_SHA}'
     ]
+
+# Create release in Google Cloud Deploy(Auto Promote from Staging to Production)
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: gcloud
+  args:
+    [
+      'deploy', 'releases', 'promote',
+      '--release', 'rel-${SHORT_SHA}',
+      '--delivery-pipeline', 'nextjs-cbcd-pipeline',
+      '--region', 'us-central1',
+      '--to-target', 'nextjs-cbcd-prod'
+    ]
