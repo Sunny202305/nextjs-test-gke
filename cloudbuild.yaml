@@ -49,7 +49,7 @@ steps:
 # Create release in Google Cloud Deploy(Multiple Targets Example)
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: gcloud
-  args:
+  args: 
     [
       'deploy', 'releases', 'create', 'rel-${SHORT_SHA}',
       '--delivery-pipeline', 'nextjs-cbcd-pipeline',
