@@ -1,9 +1,0 @@
-apiVersion: deploy.cloud.google.com/v1
-kind: DeliveryPipeline
-metadata:
-  name: nextjs-test-pipeline
-description: test project cicd pipeline
-serialPipeline:
-  stages:
-  - targetId: nextjs-test-gke
-  - targetId: autopilot-cluster-1

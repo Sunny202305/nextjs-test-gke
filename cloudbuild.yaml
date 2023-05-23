@@ -15,6 +15,7 @@ steps:
     - '-t'
     - 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest'
     - '.'
+  timeout: 500s
 # Push container image
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:$COMMIT_SHA' ]
@@ -51,7 +52,7 @@ steps:
   args:
     [
       'deploy', 'releases', 'create', 'rel-${SHORT_SHA}',
-      '--delivery-pipeline', 'nextjs-test-multiprod-pipeline',
+      '--delivery-pipeline', 'nextjs-cbcd-pipeline',
       '--region', 'us-central1',
       '--annotations', 'commitId=${REVISION_ID}',
       '--images', 'nextjs-test-gke=us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:${COMMIT_SHA}'

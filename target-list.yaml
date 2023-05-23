@@ -3,6 +3,7 @@ kind: Target
 metadata:
  name: multi-prod
 description: test for multiple prod clusters
+requireApproval: true
 multiTarget:
  targetIds: [ autopilot-cluster-1, autopilot-cluster-2 ]
 ---
