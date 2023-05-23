@@ -34,16 +34,16 @@ steps:
 
 # Create release in Google Cloud Deploy
 # Artifact Registry path: '--images', 'IMAGE_NAME=REPO_LOCATION/$PROJECT_ID/$REPO_NAME/IMAGE_NAME:${COMMIT_SHA}'
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
-  entrypoint: gcloud
-  args:
-    [
-      'deploy', 'releases', 'create', 'rel-${SHORT_SHA}',
-      '--delivery-pipeline', 'nextjs-test-pipeline',
-      '--region', 'us-central1',
-      '--annotations', 'commitId=${REVISION_ID}',
-      '--images', 'nextjs-test-gke=us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:${COMMIT_SHA}'
-    ]
+# - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+#   entrypoint: gcloud
+#   args:
+#     [
+#       'deploy', 'releases', 'create', 'rel-${SHORT_SHA}',
+#       '--delivery-pipeline', 'nextjs-test-pipeline',
+#       '--region', 'us-central1',
+#       '--annotations', 'commitId=${REVISION_ID}',
+#       '--images', 'nextjs-test-gke=us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:${COMMIT_SHA}'
+#     ]
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: gcloud
   args:
