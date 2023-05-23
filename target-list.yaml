@@ -25,7 +25,7 @@ gke:
   cluster: projects/flyntlok-test-project/locations/us-central1/clusters/autopilot-cluster-1
 ---
 
-# even a GKE in different location, target need to be created in same location with delivery-pipeline
+# even a GKE in different location, target need to be created in the same location with delivery-pipeline
 # accoring to: https://cloud.google.com/deploy/docs/regions#:~:text=Google%20Cloud%20Deploy%20instances%20can,to%20deploy%20to%20multiple%20regions.
 apiVersion: deploy.cloud.google.com/v1
 kind: Target

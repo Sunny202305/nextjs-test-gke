@@ -6,7 +6,7 @@
 # - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}'
 
 steps:
-# build the container image
+# Build the container image
 - name: 'gcr.io/cloud-builders/docker'
   args: 
     - 'build'
@@ -15,13 +15,13 @@ steps:
     - '-t'
     - 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest'
     - '.'
-# push container image
+# Push container image
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:$COMMIT_SHA' ]
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest' ]
 
-# deploy image to GKE(directly)
+# Deploy image to GKE(Directly Deploy to GKE Example)
 # - name: gcr.io/cloud-builders/kubectl
 #   args:
 #     - set
@@ -32,7 +32,7 @@ steps:
 #     - CLOUDSDK_COMPUTE_ZONE=us-central1
 #     - CLOUDSDK_CONTAINER_CLUSTER=nextjs-test-gke
 
-# Create release in Google Cloud Deploy
+# Create release in Google Cloud Deploy(Single Target Example)
 # Artifact Registry path: '--images', 'IMAGE_NAME=REPO_LOCATION/$PROJECT_ID/$REPO_NAME/IMAGE_NAME:${COMMIT_SHA}'
 # - name: gcr.io/google.com/cloudsdktool/cloud-sdk
 #   entrypoint: gcloud
@@ -44,6 +44,8 @@ steps:
 #       '--annotations', 'commitId=${REVISION_ID}',
 #       '--images', 'nextjs-test-gke=us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:${COMMIT_SHA}'
 #     ]
+
+# Create release in Google Cloud Deploy(Multiple Targets Example)
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: gcloud
   args:
