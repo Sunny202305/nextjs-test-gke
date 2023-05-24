@@ -22,16 +22,16 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'push', 'us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest' ]
 
-# Deploy image to GKE(Directly Deploy to GKE Example)
-# - name: gcr.io/cloud-builders/kubectl
-#   args:
-#     - set
-#     - image
-#     - deployment/nextjs-test-gke
-#     - nextjs-test-gke=us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:$COMMIT_SHA
-#   env:
-#     - CLOUDSDK_COMPUTE_ZONE=us-central1
-#     - CLOUDSDK_CONTAINER_CLUSTER=nextjs-test-gke
+# Deploy image to GKE staging cluster
+- name: gcr.io/cloud-builders/kubectl
+  args:
+    - set
+    - image
+    - deployment/nextjs-test-gke
+    - nextjs-test-gke=us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:$COMMIT_SHA
+  env:
+    - CLOUDSDK_COMPUTE_ZONE=us-central1
+    - CLOUDSDK_CONTAINER_CLUSTER=nextjs-test-gke
 
 # Create release in Google Cloud Deploy(Single Target Example)
 # Artifact Registry path: '--images', 'IMAGE_NAME=REPO_LOCATION/$PROJECT_ID/$REPO_NAME/IMAGE_NAME:${COMMIT_SHA}'
@@ -59,13 +59,13 @@ steps:
     ]
 
 # Create release in Google Cloud Deploy(Auto Promote from Staging to Production)
-- name: gcr.io/google.com/cloudsdktool/cloud-sdk
-  entrypoint: gcloud
-  args:
-    [
-      'deploy', 'releases', 'promote',
-      '--release', 'rel-${SHORT_SHA}',
-      '--delivery-pipeline', 'nextjs-cbcd-pipeline',
-      '--region', 'us-central1',
-      '--to-target', 'nextjs-cbcd-prod'
-    ]
+# - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+#   entrypoint: gcloud
+#   args:
+#     [
+#       'deploy', 'releases', 'promote',
+#       '--release', 'rel-${SHORT_SHA}',
+#       '--delivery-pipeline', 'nextjs-cbcd-pipeline',
+#       '--region', 'us-central1',
+#       '--to-target', 'nextjs-cbcd-prod'
+#     ]
