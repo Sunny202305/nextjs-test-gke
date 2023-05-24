@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: nextjs-test-gke
-  replicas: 2
+  replicas: 3
   strategy:
     type: RollingUpdate
   template:
