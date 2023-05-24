@@ -7,6 +7,8 @@ spec:
     matchLabels:
       app: nextjs-test-gke
   replicas: 2
+  strategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -14,6 +16,6 @@ spec:
     spec:
       containers:
         - name: nextjs-test-gke
-          image: us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke:latest
+          image: us-central1-docker.pkg.dev/flyntlok-test-project/nextjs-test-gke/nextjs-test-gke
           ports:
            - containerPort: 3000
